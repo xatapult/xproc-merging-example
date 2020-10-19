@@ -1,0 +1,4 @@
+<citytemps date="2020-10-10" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <xi:include href="temps/12345.xml"/>
+  <xi:include href="temps/56789.xml"/>
+</citytemps>
