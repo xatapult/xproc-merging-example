@@ -26,15 +26,18 @@
     <p:with-input pipe="temps@main-pipeline"/>
   </p:xinclude>
 
-  <!-- 3 - Create a sequence of all necessary documents and wrap them in a root element: -->
-  <p:wrap-sequence wrapper="wrapper-root-element">
-    <p:with-input 
-      pipe="template@main-pipeline result@temps-file-xincluded city-ids@main-pipeline"/>
-  </p:wrap-sequence>
+  <!-- 3 - Refer to the documents using document-node() type variables: -->
+  <p:variable name="city-temps-document" as="document-node()" select="."/>
+  <p:variable name="city-ids-document" as="document-node()" select="." 
+    pipe="city-ids@main-pipeline"/>
 
   <!-- 4 - Do the XSLT processing: -->
-  <p:xslt>
-    <p:with-input port="stylesheet" href="implementation-2.xsl"/>
+  <p:xslt parameters="map{ 
+      'city-temps-document': $city-temps-document, 
+      'city-ids-document'  : $city-ids-document 
+    }">
+    <p:with-input pipe="template@main-pipeline"/>
+    <p:with-input port="stylesheet" href="implementation-3.xsl"/>
   </p:xslt>
 
 </p:declare-step>

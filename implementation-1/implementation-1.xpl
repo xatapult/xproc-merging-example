@@ -27,7 +27,7 @@
   </p:xinclude>
   <p:store href="{$temps-filename}" name="write-temps-to-disk"/>
 
-  <!-- 5 - Validate the city-ids document. If main-pipeline is invalid the pipeline will fail: -->
+  <!-- 5 - Validate the city-ids document. If this is invalid the pipeline will fail: -->
   <p:validate-with-xml-schema>
     <p:with-input pipe="city-ids@main-pipeline"/>
     <p:with-input port="schema" href="../data/xsd/city-ids.xsd"/>
@@ -39,7 +39,10 @@
 
   <!-- 7 - Do the XSLT processing: -->
   <p:xslt 
-    parameters="map{'temps-filename': $temps-filename, 'city-ids-filename': $city-ids-filename}" 
+    parameters="map{
+      'temps-filename': $temps-filename, 
+      'city-ids-filename': $city-ids-filename
+    }" 
     depends="write-temps-to-disk">
     <p:with-input pipe="template@main-pipeline"/>
     <p:with-input port="stylesheet" href="implementation-1.xsl"/>
