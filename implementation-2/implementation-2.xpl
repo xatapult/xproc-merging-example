@@ -16,7 +16,7 @@
   <!-- ======================================================================= -->
 
   <!-- 1 - Validate the city-ids document. If this is invalid the pipeline will fail: -->
-  <p:validate-with-xml-schema>
+  <p:validate-with-xml-schema name="validate-city-ids-document">
     <p:with-input pipe="city-ids@main-pipeline"/>
     <p:with-input port="schema" href="../data/xsd/city-ids.xsd"/>
   </p:validate-with-xml-schema>
@@ -29,7 +29,11 @@
   <!-- 3 - Create a sequence of all necessary documents and wrap them in a root element: -->
   <p:wrap-sequence wrapper="wrapper-root-element">
     <p:with-input 
-      pipe="template@main-pipeline result@temps-file-xincluded city-ids@main-pipeline"/>
+      pipe="
+        template@main-pipeline 
+        result@temps-file-xincluded 
+        result@validate-city-ids-document
+      "/>
   </p:wrap-sequence>
 
   <!-- 4 - Do the XSLT processing: -->

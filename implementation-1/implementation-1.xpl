@@ -28,7 +28,7 @@
   <p:store href="{$temps-filename}" name="write-temps-to-disk"/>
 
   <!-- 5 - Validate the city-ids document. If this is invalid the pipeline will fail: -->
-  <p:validate-with-xml-schema>
+  <p:validate-with-xml-schema name="validate-city-ids-document">
     <p:with-input pipe="city-ids@main-pipeline"/>
     <p:with-input port="schema" href="../data/xsd/city-ids.xsd"/>
   </p:validate-with-xml-schema>
@@ -43,7 +43,7 @@
       'temps-filename': $temps-filename, 
       'city-ids-filename': $city-ids-filename
     }" 
-    depends="write-temps-to-disk">
+    depends="write-temps-to-disk validate-city-ids-document">
     <p:with-input pipe="template@main-pipeline"/>
     <p:with-input port="stylesheet" href="implementation-1.xsl"/>
   </p:xslt>

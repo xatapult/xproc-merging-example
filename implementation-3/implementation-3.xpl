@@ -16,7 +16,7 @@
   <!-- ======================================================================= -->
 
   <!-- 1 - Validate the city-ids document. If this is invalid the pipeline will fail: -->
-  <p:validate-with-xml-schema>
+  <p:validate-with-xml-schema name="validate-city-ids-document">
     <p:with-input pipe="city-ids@main-pipeline"/>
     <p:with-input port="schema" href="../data/xsd/city-ids.xsd"/>
   </p:validate-with-xml-schema>
@@ -29,7 +29,7 @@
   <!-- 3 - Refer to the documents using document-node() type variables: -->
   <p:variable name="city-temps-document" as="document-node()" select="."/>
   <p:variable name="city-ids-document" as="document-node()" select="." 
-    pipe="city-ids@main-pipeline"/>
+    pipe="result@validate-city-ids-document"/>
 
   <!-- 4 - Do the XSLT processing: -->
   <p:xslt parameters="map{ 
